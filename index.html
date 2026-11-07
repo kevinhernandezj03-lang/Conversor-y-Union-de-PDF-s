@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convertidor Local Express</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Librerías locales -->
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script src="vendor/jszip.min.js"></script>
+  <script src="vendor/pdf.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Convertidor Local Express</h1>
+      <p class="subtitle">Convierte y une archivos en tu navegador. Nada se sube a internet.</p>
+    </header>
+
+    <main>
+      <!-- Zona de carga -->
+      <div id="drop-zone" class="drop-zone">
+        <div class="drop-content">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 16V4M8 8l4-4 4 4"/>
+            <path d="M20 16v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4"/>
+          </svg>
+          <p><strong>Arrastra archivos aquí</strong> o haz clic para seleccionar</p>
+          <p class="formats">PDF · JPG · PNG · WebP · JSON</p>
+        </div>
+        <input type="file" id="file-input" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.json,application/pdf,image/*" />
+      </div>
+
+      <!-- Lista de archivos -->
+      <section id="files-section" class="files-section hidden">
+        <div class="section-header">
+          <h2>Archivos cargados</h2>
+          <button id="clear-all" class="btn btn-text">Limpiar todo</button>
+        </div>
+        <ul id="file-list" class="file-list"></ul>
+
+        <div class="actions-bar">
+          <div id="global-actions" class="global-actions"></div>
+          <button id="process-btn" class="btn btn-primary" disabled>Procesar</button>
+        </div>
+      </section>
+
+      <!-- Resultados -->
+      <section id="results-section" class="results-section hidden">
+        <div class="section-header">
+          <h2>Resultados</h2>
+          <button id="download-all" class="btn btn-secondary">Descargar todo (ZIP)</button>
+        </div>
+        <ul id="results-list" class="results-list"></ul>
+      </section>
+
+      <!-- Estado / mensajes -->
+      <div id="status" class="status hidden"></div>
+    </main>
+
+    <footer>
+      <p>100 % local · Los archivos nunca salen de tu dispositivo</p>
+    </footer>
+  </div>
+
+  <script>
+    // Configurar worker de pdf.js
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js';
+    }
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
